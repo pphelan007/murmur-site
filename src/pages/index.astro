@@ -349,7 +349,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             </div>
           </div>
           <div class="dl-actions">
-            <a href="https://github.com/pphelan007/murmur-updates/releases/latest" class="btn btn-primary">
+            <!--
+              Direct-download URL — GitHub serves the asset with
+              Content-Disposition: attachment, so the browser downloads
+              immediately rather than navigating to the releases page.
+              The /latest/ token resolves to whatever the most recent
+              release with this asset is, so we don't update this link
+              per-release. 404 until the first v0.1.0 ships.
+            -->
+            <a href="https://github.com/pphelan007/murmur-updates/releases/latest/download/Murmur.dmg" class="btn btn-primary" download>
               Download Murmur for Mac
               <span class="arrow" aria-hidden="true">↓</span>
             </a>
