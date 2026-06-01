@@ -1,0 +1,481 @@
+---
+import '../styles/global.css';
+const year = new Date().getFullYear();
+// BASE_URL is '/murmur-site' (or '/' if base is dropped later for apex domain).
+// Use it for every absolute asset/page link so the site works under both layouts.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>Murmur — Local dictation for Mac</title>
+    <meta name="description" content="A push-to-talk Mac dictation app that runs entirely on your machine. MLX-accelerated Whisper. No cloud, no accounts, no telemetry." />
+    <meta property="og:title" content="Murmur — Local dictation for Mac" />
+    <meta property="og:description" content="Hold a key, speak, release. Your words land where the cursor is. Nothing leaves your Mac." />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,30..100,0..1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- ===================== NAV ===================== -->
+    <header class="nav" id="nav">
+      <div class="container nav-inner">
+        <a href={`${base}/`} class="brand" aria-label="Murmur home">
+          <span class="brand-mark">M</span>
+          <span class="brand-name">Murmur</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#compare">Why local</a>
+          <a href="#faq">FAQ</a>
+          <a href="#download" class="btn btn-ghost btn-sm">Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="hero-eyebrow">
+            <span class="dot"></span>
+            Local-only. No audio leaves your Mac.
+          </span>
+          <h1>
+            Dictation that<br/>
+            stays <span class="accent">on your Mac.</span>
+          </h1>
+          <p class="lede">
+            Hold a key. Speak. Release. Your words appear at the cursor — in any app — transcribed on-device with MLX-accelerated Whisper. No accounts, no servers, no telemetry.
+          </p>
+          <div class="hero-ctas">
+            <a href="#download" class="btn btn-primary">
+              Download for Mac
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="#how" class="btn btn-ghost">See how it works</a>
+          </div>
+          <div class="hero-meta">
+            <span class="meta-item"><span class="checkmark">✓</span> Apple Silicon</span>
+            <span class="meta-item"><span class="checkmark">✓</span> macOS 12+</span>
+            <span class="meta-item"><span class="checkmark">✓</span> $0.99/mo · $9.99/yr</span>
+          </div>
+        </div>
+
+        <!-- App mock -->
+        <div class="window" aria-hidden="true">
+          <div class="win-titlebar">
+            <span class="tl-dot red"></span>
+            <span class="tl-dot amber"></span>
+            <span class="tl-dot green"></span>
+            <span class="tl-title">Murmur</span>
+          </div>
+          <div class="win-tabs">
+            <span class="win-tab active">Home</span>
+            <span class="win-tab">History</span>
+            <span class="win-tab">Dictionary</span>
+            <span class="win-tab">Snippets</span>
+            <span class="win-tab">Settings</span>
+          </div>
+          <div class="win-body">
+            <div class="transcript-card">
+              <div class="transcript-meta">
+                <span>Latest transcript</span>
+                <span class="pill">small.en · MLX · Llama polish</span>
+              </div>
+              <div class="transcript-text">
+                The quick brown fox jumps over the lazy dog and then quietly types itself into whatever window I happen to be looking at.<span class="caret"></span>
+              </div>
+              <div class="level" aria-hidden="true" id="level"></div>
+            </div>
+            <div class="hint-row">
+              <span class="kbd">⌥ Right Option</span>
+              <span>held — release to transcribe and paste</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VALUE STRIP ===================== -->
+    <section class="container" id="features" style="padding-top:24px;">
+      <div class="value-strip">
+        <div class="v">Local.<small>Audio is processed and discarded in memory. Nothing is written to disk, nothing is sent over the network.</small></div>
+        <div class="v">Polished.<small>A local Llama model cleans up punctuation, capitalization, and tone on every transcript before it lands at your cursor.</small></div>
+        <div class="v">Private.<small>No cloud audio, no telemetry, no analytics. The mic only opens while you're holding the key.</small></div>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURES ===================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-hd">
+          <span class="eyebrow">What you get</span>
+          <h2>Quietly powerful. Out of the way.</h2>
+          <p>Murmur lives in the menu bar and stays asleep until you ask. Hold the key, speak, release — that's the whole interaction model.</p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><path d="M12 19v3"/></svg>
+            </div>
+            <h3>Push-to-talk hotkey</h3>
+            <p>Default is Right Option. Configurable to Fn, Right Shift, Caps Lock, or any single modifier — the keys you don't otherwise use.</p>
+          </div>
+
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7z"/></svg>
+            </div>
+            <h3>On-device Llama polish</h3>
+            <p>After Whisper produces the raw transcript, a local Llama model fixes punctuation and capitalization, and adapts tone to the frontmost app — casual in Slack, formal in Mail. Still entirely offline.</p>
+          </div>
+
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            </div>
+            <h3>Searchable history</h3>
+            <p>Every transcript is kept locally in <code>history.json</code> — capped at 500 entries, with copy, paste, and clear right in the app.</p>
+          </div>
+
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l4-4 4 4M7 3v12"/><path d="M21 17l-4 4-4-4M17 21V9"/></svg>
+            </div>
+            <h3>Custom dictionary</h3>
+            <p>Find-and-replace rules applied to every transcript — names, jargon, brand spellings, the works. Runs entirely client-side.</p>
+          </div>
+
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 19V9l6-4 6 4v10"/><path d="M10 19v-6h4v6"/></svg>
+            </div>
+            <h3>Snippets</h3>
+            <p>Spoken triggers that expand into longer phrases. Say "sig" and watch your signature land. Defined in plain JSON.</p>
+          </div>
+
+          <div class="card">
+            <div class="ico" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+            </div>
+            <h3>Quiet auto-updates</h3>
+            <p>Signed, notarized updates via Sparkle — checked once a day, installed when you say go. No release notes you didn't ask for, no popups while you're typing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section class="section" id="how" style="background:linear-gradient(180deg,#fdfaf2, #faf8f4 80%);">
+      <div class="container">
+        <div class="section-hd">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps. No setup once it's installed.</h2>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <span class="num">i.</span>
+            <h3>Hold the key</h3>
+            <p>Right Option by default. Press it in any text field — Notes, Slack, your terminal, a comment on a PR.</p>
+            <div class="visual">
+              <span class="kbd">⌥ Right Option</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="num">ii.</span>
+            <h3>Speak</h3>
+            <p>Murmur captures audio in memory and runs Whisper on the Apple Neural Engine via MLX. A local Llama pass then cleans up punctuation, capitalization, and tone for the app you're in.</p>
+            <div class="visual" aria-hidden="true">
+              <svg width="120" height="40" viewBox="0 0 200 40">
+                <g fill="#0c5b3f">
+                  <rect x="2" y="16" width="3" height="8" rx="1.5"/>
+                  <rect x="10" y="10" width="3" height="20" rx="1.5"/>
+                  <rect x="18" y="6"  width="3" height="28" rx="1.5"/>
+                  <rect x="26" y="12" width="3" height="16" rx="1.5"/>
+                  <rect x="34" y="4"  width="3" height="32" rx="1.5"/>
+                  <rect x="42" y="14" width="3" height="12" rx="1.5"/>
+                  <rect x="50" y="8"  width="3" height="24" rx="1.5"/>
+                  <rect x="58" y="2"  width="3" height="36" rx="1.5"/>
+                  <rect x="66" y="10" width="3" height="20" rx="1.5"/>
+                  <rect x="74" y="14" width="3" height="12" rx="1.5"/>
+                  <rect x="82" y="6"  width="3" height="28" rx="1.5"/>
+                  <rect x="90" y="12" width="3" height="16" rx="1.5"/>
+                  <rect x="98" y="16" width="3" height="8" rx="1.5"/>
+                  <rect x="106" y="10" width="3" height="20" rx="1.5"/>
+                  <rect x="114" y="4" width="3" height="32" rx="1.5"/>
+                  <rect x="122" y="14" width="3" height="12" rx="1.5"/>
+                  <rect x="130" y="8" width="3" height="24" rx="1.5"/>
+                  <rect x="138" y="12" width="3" height="16" rx="1.5"/>
+                  <rect x="146" y="16" width="3" height="8" rx="1.5"/>
+                  <rect x="154" y="10" width="3" height="20" rx="1.5"/>
+                  <rect x="162" y="14" width="3" height="12" rx="1.5"/>
+                  <rect x="170" y="16" width="3" height="8" rx="1.5"/>
+                  <rect x="178" y="18" width="3" height="4" rx="1.5"/>
+                  <rect x="186" y="18" width="3" height="4" rx="1.5"/>
+                  <rect x="194" y="18" width="3" height="4" rx="1.5"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="num">iii.</span>
+            <h3>Release</h3>
+            <p>Text is pasted at the cursor, wherever you were. Dictionary rules and snippets apply on the way out.</p>
+            <div class="visual" aria-hidden="true">
+              <svg width="140" height="40" viewBox="0 0 200 40">
+                <rect x="6" y="14" width="160" height="12" rx="3" fill="#e8e1cf"/>
+                <rect x="6" y="14" width="98"  height="12" rx="3" fill="#0c5b3f"/>
+                <rect x="106" y="10" width="1.5" height="20" fill="#0c5b3f">
+                  <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+                </rect>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COMPARE ===================== -->
+    <section class="section" id="compare">
+      <div class="container">
+        <div class="section-hd">
+          <span class="eyebrow">Why local</span>
+          <h2>Cloud dictation, without the cloud.</h2>
+          <p>Murmur does what hosted dictation tools do — except your voice never leaves the room it was spoken in.</p>
+        </div>
+
+        <div class="compare">
+          <div class="compare-grid">
+            <div class="hd">&nbsp;</div>
+            <div class="hd">Cloud dictation</div>
+            <div class="hd us">Murmur</div>
+
+            <div class="row-label">Audio sent off-device</div>
+            <div class="no">Always</div>
+            <div class="yes">Never</div>
+
+            <div class="row-label">Works offline</div>
+            <div class="no">No</div>
+            <div class="yes">Yes (after first model download)</div>
+
+            <div class="row-label">Account required</div>
+            <div class="no">Yes</div>
+            <div class="yes">No</div>
+
+            <div class="row-label">Telemetry / analytics</div>
+            <div class="no">Yes</div>
+            <div class="yes">None</div>
+
+            <div class="row-label">Latency</div>
+            <div class="no">Network round-trip</div>
+            <div class="yes">On-device, sub-second warm-up</div>
+
+            <div class="row-label">Pricing</div>
+            <div class="no">$10–30/mo + usage</div>
+            <div class="yes">$0.99/mo or $9.99/yr</div>
+
+            <div class="row-label">Per-minute fees</div>
+            <div class="no">Yes</div>
+            <div class="yes">None — dictate all you want</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MODELS ===================== -->
+    <section class="section" style="background:linear-gradient(180deg,#fdfaf2, #faf8f4 80%);">
+      <div class="container">
+        <div class="section-hd">
+          <span class="eyebrow">Models</span>
+          <h2>Switch sizes from the menu bar.</h2>
+          <p>Three Whisper sizes ship out of the box. First switch downloads the model from Hugging Face into <code>~/.cache/huggingface/</code>. After that, everything runs offline.</p>
+        </div>
+
+        <div class="models">
+          <div class="model">
+            <h4>Tiny</h4>
+            <div class="size">~75 MB · fastest</div>
+            <ul>
+              <li>Snappy on M1 Air</li>
+              <li>Best for short bursts</li>
+              <li>English-only</li>
+            </ul>
+          </div>
+          <div class="model popular">
+            <h4>Small</h4>
+            <div class="size">~470 MB · default</div>
+            <ul>
+              <li>MLX 4-bit quantized</li>
+              <li>Sub-second warm-up</li>
+              <li>Best accuracy/speed balance</li>
+            </ul>
+          </div>
+          <div class="model">
+            <h4>Base</h4>
+            <div class="size">~145 MB · balanced</div>
+            <ul>
+              <li>Middle ground</li>
+              <li>Good on older Apple Silicon</li>
+              <li>English-only</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DOWNLOAD ===================== -->
+    <section class="section" id="download">
+      <div class="container">
+        <div class="dl-card">
+          <div>
+            <span class="eyebrow">Download</span>
+            <h2 style="margin-top:12px;">Get Murmur for Mac.</h2>
+            <p><strong>$0.99 / month</strong> or <strong>$9.99 / year.</strong> Drag <code>Murmur.app</code> to <code>/Applications</code>. On first launch, allow Microphone, Accessibility, and Input Monitoring. Hold Right Option in any text field to start.</p>
+            <div class="reqs">
+              Requires macOS 12+ on Apple Silicon (M1 or later).<br/>
+              First-time model download ~470 MB from Hugging Face. Everything else is offline.<br/>
+              Billing wires up shortly — early downloads are unmetered while we shake the install + auto-update pipeline.
+            </div>
+          </div>
+          <div class="dl-actions">
+            <a href="https://github.com/pphelan007/murmur-updates/releases/latest" class="btn btn-primary">
+              Download Murmur for Mac
+              <span class="arrow" aria-hidden="true">↓</span>
+            </a>
+            <a href="#faq" class="btn btn-ghost btn-sm">Read the FAQ</a>
+            <span style="font-size:12.5px;color:var(--muted);margin-top:6px;">Signed &amp; notarized · v0.1.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section class="section" id="faq" style="background:#fdfaf2;">
+      <div class="container">
+        <div class="section-hd">
+          <span class="eyebrow">Questions</span>
+          <h2>Frequently asked.</h2>
+        </div>
+        <div class="faq">
+          <details class="faq-item" open>
+            <summary>Does any audio leave my Mac?</summary>
+            <div class="answer">No. Microphone audio is buffered in memory only while you hold the dictation key, transcribed on-device by MLX-Whisper, and discarded the moment the transcript is produced. Raw audio is never written to disk and never sent anywhere.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What's actually downloaded?</summary>
+            <div class="answer">The first time you switch to a Whisper or LLM model that isn't already cached, Murmur fetches it from <code>huggingface.co</code> into <code>~/.cache/huggingface/</code>. After that, Murmur runs fully offline. That's the only network call the app ever makes.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What languages does it support?</summary>
+            <div class="answer">The default model is <code>whisper-small.en</code>, which is English-only and optimized for it. Multilingual models can be configured if you set <code>WISPR_MODEL</code> to a non-<code>.en</code> variant — accuracy depends on the language.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Why push-to-talk instead of always-on?</summary>
+            <div class="answer">Two reasons. Privacy: the mic only opens while you're holding a key, so there's no ambient listening. Predictability: dictation only happens when you've decided you want to dictate, which makes it usable in shared spaces.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Will it work on Intel Macs?</summary>
+            <div class="answer">No. MLX requires Apple Silicon. If you have an M1 or later running macOS 12+, you're set.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How much does it cost?</summary>
+            <div class="answer">$0.99 / month or $9.99 / year — flat. No usage tiers, no per-minute fees, no "pro" upsell. The early downloads are unmetered while billing wires up; you'll see a license-key prompt in a future update with a grace period to subscribe.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is the source code open?</summary>
+            <div class="answer">No. Murmur is a closed-source commercial product. The third-party libraries it depends on (mlx, mlx-whisper, pyobjc, Sparkle, etc.) keep their own open-source licenses, but Murmur's own code, design, and assets are proprietary.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How does it paste at the cursor?</summary>
+            <div class="answer">macOS Accessibility APIs. Murmur synthesizes a Cmd+V paste into the frontmost app, then restores your clipboard. You'll need to grant Accessibility and Input Monitoring permissions on first launch.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="brand">
+              <span class="brand-mark">M</span>
+              <span class="brand-name">Murmur</span>
+            </div>
+            <p class="blurb">A local-only voice dictation app for macOS. Built by Patrick Phelan on Apple Silicon, for Apple Silicon.</p>
+          </div>
+          <div>
+            <h5>Product</h5>
+            <ul>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#how">How it works</a></li>
+              <li><a href="#compare">Why local</a></li>
+              <li><a href="#download">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Resources</h5>
+            <ul>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="https://github.com/pphelan007/murmur-updates/releases">Changelog</a></li>
+              <li><a href="#download">Download</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Trust</h5>
+            <ul>
+              <li><a href="#">Privacy policy</a></li>
+              <li><a href="#">License</a></li>
+              <li><a href="mailto:phelan.lucky7@gmail.com">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="legal">
+          <span>© {year} Murmur. Built on a Mac.</span>
+          <span>No cloud audio · No telemetry · On-device dictation</span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // Tiny scroll-shadow on nav
+      const nav = document.getElementById('nav');
+      const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Mic level bars animation in hero
+      const level = document.getElementById('level');
+      if (level) {
+        const N = 28;
+        for (let i = 0; i < N; i++) {
+          const s = document.createElement('span');
+          s.style.height = '6px';
+          level.appendChild(s);
+        }
+        const bars = level.querySelectorAll('span');
+        let t = 0;
+        setInterval(() => {
+          t += 0.18;
+          bars.forEach((b, i) => {
+            const env = Math.sin(t + i * 0.55) * 0.5 + 0.6;
+            const noise = Math.random() * 0.35;
+            const h = Math.max(3, Math.min(26, (env + noise) * 22));
+            b.style.height = h.toFixed(1) + 'px';
+            b.style.opacity = (0.45 + (h / 28) * 0.55).toFixed(2);
+          });
+        }, 70);
+      }
+    </script>
+  </body>
+</html>
